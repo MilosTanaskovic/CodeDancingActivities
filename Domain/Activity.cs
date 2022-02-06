@@ -1,5 +1,6 @@
 using System;
 
+// The Clean Archit. -> Entitites leyer
 namespace Domain
 {
     public class Activity
