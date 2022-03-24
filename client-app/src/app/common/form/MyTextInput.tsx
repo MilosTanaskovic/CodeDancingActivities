@@ -4,8 +4,9 @@ import { Form, Label } from 'semantic-ui-react'
 
 interface Props {
     placeholder: string;
-    name: string
-    label?: string
+    name: string;
+    type?: string;
+    label?: string;
 }
 export default function MyTextInput(props: Props) {
     const [field, meta] = useField(props.name)
