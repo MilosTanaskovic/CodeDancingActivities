@@ -13,7 +13,7 @@ import MyTextArea from '../../../app/common/form/MyTextArea';
 import MySelectInput from '../../../app/common/form/MySelectInput';
 import { categoryOptions } from '../../../app/common/options/categoryOptions';
 import MyDateInput from '../../../app/common/form/MyDateInput';
-import { Activity } from '../../../app/models/activity';
+import { ActivityFormValues } from '../../../app/models/activity';
 
 export default observer(function ActivityForm() {
     const history = useHistory();
@@ -21,15 +21,7 @@ export default observer(function ActivityForm() {
     const {createActivity, updateActivity, loading, loadingActivity, loadingInitial} = activityStore;
     const { id } = useParams<{id: string}>();
 
-    const [activity, setActivity] = useState<Activity>({
-        id: '',
-        title: '',
-        category: '',
-        description: '',
-        date: null,
-        city: '',
-        venue: '',
-    });
+    const [activity, setActivity] = useState<ActivityFormValues>(new ActivityFormValues);
 
     const validationSchema = Yup.object({
         title: Yup.string().required('The activity title is requried'),
@@ -42,14 +34,14 @@ export default observer(function ActivityForm() {
     })
 
     useEffect(() => {
-        if(id) loadingActivity(id).then(activity => setActivity(activity!));
+        if(id) loadingActivity(id).then(activity => setActivity(new ActivityFormValues(activity)));
     }, [id, loadingActivity]);
 
     
 
     // handle Submit
-    const handleFormSubmit = (activity: Activity) => {
-        if(activity.id.length === 0) {
+    const handleFormSubmit = (activity: ActivityFormValues) => {
+        if(!activity.id) {
             let newActivity = {
                 ...activity,
                 id: uuid()
@@ -102,7 +94,7 @@ export default observer(function ActivityForm() {
                     <MyTextInput name='venue' placeholder='Venue' />
                     <Button 
                         disabled={isSubmitting || !dirty || !isValid}
-                        loading={loading} 
+                        loading={isSubmitting} 
                         floated='right' 
                         positive 
                         type='submit' 
