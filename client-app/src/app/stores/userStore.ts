@@ -22,7 +22,6 @@ export default class UserStore {
             runInAction(() => this.user = user);
             history.push('/activities');
             store.modalStore.closeModal();
-            // console.log(user);
         } catch (error) {
             throw error;
         }
@@ -58,5 +57,9 @@ export default class UserStore {
 
     setImage = (image: string) => {
         if(this.user) this.user.image = image;
+    }
+
+    setDisplayName = (name: string) => {
+        if (this.user) this.user.displayName = name;
     }
 }

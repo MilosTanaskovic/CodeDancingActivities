@@ -1,8 +1,5 @@
 import axios, { AxiosError, AxiosResponse } from 'axios';
-import { request } from 'http';
-import { config } from 'process';
 import { toast } from 'react-toastify';
-//import { history } from '../..';
 import {Activity, ActivityFormValues} from '../models/activity';
 import { PaginatedRusult } from '../models/pagination';
 import { Photo, Profile, UserActivity } from '../models/profile';
@@ -15,7 +12,7 @@ const sleep = (delay: number) => {
     });
 }
 
-axios.defaults.baseURL = 'http://localhost:5000/api';
+axios.defaults.baseURL = process.env.REACT_APP_API_URL;
 
 axios.interceptors.request.use((config: any) => {
     const token = store.commonStore.token;
@@ -24,8 +21,8 @@ axios.interceptors.request.use((config: any) => {
 })
 
 axios.interceptors.response.use(async response => {
-   
-        await sleep(1000);
+    if(process.env.NODE_ENV === 'development')  await sleep(1000);
+       
         const pagination = response.headers['pagination'];
         if(pagination) {
             response.data = new PaginatedRusult(response.data, JSON.parse(pagination));
@@ -106,7 +103,7 @@ const Profiles = {
     },
     setMinPhoto: (id: string) => requests.post(`/photos/${id}/setMain`, {}),
     deletePhoto: (id: string) => requests.del(`/photos/${id}`),
-    //updateProfile: (profile: Partial<Profile>) => requests.put(`/profiles`, profile),
+    updateProfile: (profile: Partial<Profile>) => requests.put(`/profiles`, profile),
     updateFollowing: (username: string) => requests.post(`/follow/${username}`, {}),
     listFollowings: (username: string, predicate: string) => requests.get<Profile[]>(`/follow/${username}?predicate=${predicate}`),
     listActivities: (username: string, predicate: string) => requests.get<UserActivity[]>(`/profiles/${username}/activities? predicate=${predicate}`)

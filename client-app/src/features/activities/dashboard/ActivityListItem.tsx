@@ -10,14 +10,6 @@ interface Props {
 }
 
 export default function ActivityListItem({activity}: Props) {
-    // const { activityStore } = useStore();
-    // const { deleteActivity, loading } = activityStore;
-    // const [target, setTarget] = useState('');
-
-    // const handleActivityDelete = (e: SyntheticEvent<HTMLButtonElement>, id: string) => {
-    //     setTarget(e.currentTarget.name);
-    //     deleteActivity(id);
-    // }
     console.log(activity);
     return (
        <Segment.Group>

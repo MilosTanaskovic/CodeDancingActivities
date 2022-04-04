@@ -8,9 +8,6 @@ import { Pagination, PagingParams } from "../models/pagination";
 import { resourceLimits } from "worker_threads";
 
 export default class ActivityStore {
-    
-    // initials properties
-    //activities: Activity[] = [];
     activityRegistry = new Map<string, Activity>();
     selectedActivity: Activity | undefined = undefined;
     editMode = false;
@@ -103,12 +100,8 @@ export default class ActivityStore {
             });
             this.setPagination(result.pagination);
             this.setLoadingInitial(false);
-            //this.loadingInitial = false;
         } catch (error) {
             console.log(error);
-            // runInAction(() => {
-            //     this.loadingInitial = false;
-            // })
             this.setLoadingInitial(false);
             
         }
@@ -148,7 +141,6 @@ export default class ActivityStore {
             activity.host = activity.attendees?.find(x => x.username === activity.hostUsername);
         }
         activity.date = new Date(activity.date!);
-        //this.activities.push(activity);
         this.activityRegistry.set(activity.id, activity);
     }
 
@@ -173,8 +165,6 @@ export default class ActivityStore {
             newActivity.attendees = [attendee];
             this.setActivity(newActivity);
             runInAction(() => {
-                // this.activities.push(activity);
-                // this.activityRegistry.set(activity.id, activity);
                 this.selectedActivity = newActivity;
             })
         } catch (error) {
@@ -186,7 +176,6 @@ export default class ActivityStore {
     updateActivity = async(activity: ActivityFormValues) => {
         try {
             await agent.Activities.update(activity);
-            //this.activities = [...this.activities.filter(x => x.id !== activity.id), activity];
             runInAction(() => {
                 if(activity.id){
                     let updatedActivity = {...this.getActivity(activity.id), ...activity}
@@ -204,7 +193,6 @@ export default class ActivityStore {
         this.setLoading(true);
         try {
             await agent.Activities.delete(id);
-            //this.activities = [...this.activities.filter(x => x.id !== id)];
             this.activityRegistry.delete(id);
             this.setLoading(false);
         } catch (error) {

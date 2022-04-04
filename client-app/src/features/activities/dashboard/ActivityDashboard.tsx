@@ -1,14 +1,12 @@
 import { observer } from 'mobx-react-lite'
 import React, {useState, useEffect } from 'react'
 import InfiniteScroll from 'react-infinite-scroller'
-import { Button, Grid, Loader } from 'semantic-ui-react'
-import LoadingComponents from '../../../app/layout/LoadingComponent'
+import { Grid, Loader } from 'semantic-ui-react'
 import { PagingParams } from '../../../app/models/pagination'
 import { useStore } from '../../../app/stores/store'
 import ActivityFilters from './ActivityFilters'
 import ActivityList from './ActivityList'
 import ActivityListItemPlaceholder from './ActivityListItemPlaceholder'
-//import InfiniteScroll from 'react-infinite-scroller';
 
 export default observer(function ActivityDashboard() {
     const { activityStore } = useStore();

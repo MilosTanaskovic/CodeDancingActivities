@@ -52,14 +52,6 @@ export default observer(function ActivityForm() {
         }
     }
 
-    // // handle input change
-    // const handleInputChange = (event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-    //     console.log(event.target);
-    //     const {name, value} = event.target;
-    //     console.log(name, value);
-    //     setActivity({...activity, [name]: value})
-    // }
-
     if(loadingInitial) return <LoadingComponent content='Loading activity...' />
 
     return (
@@ -75,16 +67,6 @@ export default observer(function ActivityForm() {
                 {/** these 4. props are from formik */}
                 {({handleSubmit, isValid, isSubmitting, dirty}) => (
                     <Form className='ui form' onSubmit={handleSubmit} autoComplete='off'>
-                    {/* <FormField>
-                        <Field 
-                            placeholder='Title' 
-                            name='title'
-                        />
-                        <ErrorMessage 
-                            name='title'
-                            render={error => <Label basic color='red' content={error} />}
-                        />
-                    </FormField> */}
                     <MyTextInput name='title' placeholder='Title' />
                     <MyTextArea rows={3} name='description' placeholder='Description' />
                     <MySelectInput options={categoryOptions} name='category' placeholder='Category' />
